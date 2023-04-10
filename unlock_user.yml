@@ -1,0 +1,17 @@
+---
+- name: Desbloquear usuário no Active Directory
+  hosts: all
+  gather_facts: no
+  tasks:
+    - name: Desbloquear usuário
+      win_domain_user:
+        name: "{{ username }}"
+        state: present
+        password_never_expires: yes
+        user_cannot_change_password: no
+        account_locked: no
+      register: unlock_result
+
+    - name: Exibir resultado
+      debug:
+        var: unlock_result
